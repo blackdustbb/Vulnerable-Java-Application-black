@@ -16,25 +16,16 @@ pipeline {
                 }
             }
         }
-    
+
+        stage('Scan Code with Trufflehog') {
+            steps {
+                sh "trufflehog --json /opt/Vulnerable-Java-Application | tee trufflehog-output.txt"
+            }
+        }
+
          stage('Scan Code with git-secrets') {
             steps {
-                sh "cd /opt/Vulnerable-Java-Application"
-                sh "git-secrets --scan -r /opt/Vulnerable-Java-Application | tee git-secrets.txt"
+                sh 'cd /opt/Vulnerable-Java-Application'
+                sh 'git-secrets --scan -r /opt/Vulnerable-Java-Application | tee git-secrets.txt'
             }
         }
-
-        stage('Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
-    }
-
-       post {
-        always {
-            // Archive the Trufflehog results as a build artifact
-            archiveArtifacts 'git-secrets.txt'
-        }
-    }
-}

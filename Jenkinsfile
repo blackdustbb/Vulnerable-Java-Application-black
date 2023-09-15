@@ -29,3 +29,19 @@ pipeline {
                 sh 'git-secrets --scan -r /opt/Vulnerable-Java-Application | tee git-secrets.txt'
             }
         }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+    }
+
+       post {
+        always {
+            // Archive the Trufflehog results as a build artifact
+            archiveArtifacts 'trufflehog-output.txt'
+            archiveArtifacts 'git-secrets.txt'
+        }
+    }
+}

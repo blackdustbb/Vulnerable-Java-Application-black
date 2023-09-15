@@ -18,17 +18,12 @@ pipeline {
         }
 
        
-        stage('Handle Scan Results') {
+  stage('Scan Code with git-secrets') {
     steps {
-        script {
-            def scanOutput = sh(script: 'git-secrets --scan -r /opt/Vulnerable-Java-Application ', returnStatus: true).trim()
-            if (scanOutput.contains("✖")) {
-                currentBuild.result = 'FAILURE'
-                error("Secrets were found in the codebase.")
-            } else {
-                echo "No secrets were found."
-            }
-        }
+        sh '''
+            cd /opt/Vulnerable-Java-Application
+            git-secrets --scan -r /opt/Vulnerable-Java-Application | tee git-secrets.txt
+        '''
     }
 }
 
@@ -42,7 +37,7 @@ pipeline {
        post {
         always {
             // Archive the Trufflehog results as a build artifact
-                     archiveArtifacts 'git-secrets.txt'
+                     archiveArtifacts '/opt/Vulnerable-Java-Application/git-secrets.txt'
         }
     }
 }

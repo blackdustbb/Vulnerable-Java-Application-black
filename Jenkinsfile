@@ -17,12 +17,7 @@ pipeline {
             }
         }
 
-        stage('Scan Code with Trufflehog') {
-            steps {
-                sh "trufflehog --json /opt/Vulnerable-Java-Application | tee trufflehog-output.txt"
-            }
-        }
-
+       
          stage('Scan Code with git-secrets') {
             steps {
                 sh 'cd /opt/Vulnerable-Java-Application'

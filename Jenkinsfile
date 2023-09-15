@@ -37,7 +37,7 @@ pipeline {
        post {
         always {
             // Archive the Trufflehog results as a build artifact
-                     archiveArtifacts '/opt/Vulnerable-Java-Application/git-secrets.txt'
+                     archiveArtifacts 'git-secrets.txt'
         }
     }
 }

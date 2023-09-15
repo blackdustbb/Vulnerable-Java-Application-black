@@ -16,12 +16,11 @@ pipeline {
                 }
             }
         }
-
-       
+    
          stage('Scan Code with git-secrets') {
             steps {
-                sh 'cd /opt/Vulnerable-Java-Application'
-                sh 'git-secrets --scan -r /opt/Vulnerable-Java-Application | tee git-secrets.txt'
+                sh "cd /opt/Vulnerable-Java-Application"
+                sh "git-secrets --scan -r /opt/Vulnerable-Java-Application | tee git-secrets.txt"
             }
         }
 

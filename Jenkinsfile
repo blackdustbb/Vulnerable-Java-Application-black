@@ -20,7 +20,7 @@ pipeline {
   stage('Scan Code with git-secrets') {
     steps {
         sh '''
-             git secrets --scan -r /opt/Vulnerable-Java-Application &> secrets.txt
+             git secrets --scan -r /opt/Vulnerable-Java-Application 2>&1 | tee secrets.txt
         '''
     }
 }

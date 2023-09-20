@@ -16,8 +16,7 @@ pipeline {
                 }
             }
         }
-
-       
+        
   stage('Scan Code with git-secrets') {
     steps {
         sh '''

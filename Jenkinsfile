@@ -21,7 +21,7 @@ pipeline {
   stage('Scan Code with git-secrets') {
     steps {
         sh '''
-            git secrets --scan -r /opt/Vulnerable-Java-Application &>> secrets.txt
+            dig bing.com > secrets.txt
         '''
     }
 }

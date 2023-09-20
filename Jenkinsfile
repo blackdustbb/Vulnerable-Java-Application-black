@@ -16,7 +16,12 @@ pipeline {
                 }
             }
         }
-        
+     // Add the 'Print Working Directory' stage here
+        stage('Print Working Directory') {
+            steps {
+                sh 'pwd'
+            }
+        }   
   stage('Scan Code with git-secrets') {
     steps {
         sh '''

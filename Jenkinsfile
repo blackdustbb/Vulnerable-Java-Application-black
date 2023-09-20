@@ -26,6 +26,14 @@ pipeline {
         '''
     }
 }
+        stage('Scan code with dependency-check'){
+            steps {
+                sh '''
+                    cd /opt/dependency-check/dependency-check/bin
+                    dependency-check.sh --project "test" --scan "/opt/Vulnerable-Java-Application" | tee dependency-check.txt
+                '''
+            }
+        }
 
         stage('Build') {
             steps {
@@ -36,8 +44,10 @@ pipeline {
 
        post {
         always {
-            // Archive the Trufflehog results as a build artifact
+            // Archive the git-secrets results as a build artifact
                      archiveArtifacts 'git-secrets.txt'
+                     archiveArtifacts 'dependency-check.txt'
+            
         }
     }
 }

@@ -16,16 +16,19 @@ pipeline {
                 }
             }
         }
-        
-  stage('Scan Code with git-secrets') {
-    steps {
-        sh '''
-             git secrets --scan -r /opt/Vulnerable-Java-Application 2>&1 | tee secrets.txt
-        '''
-    }
-}
-   stages {
-        // ... your existing stages ...
+
+        stage('Scan Code with git-secrets') {
+            steps {
+                sh '''
+                     git secrets --scan -r /opt/Vulnerable-Java-Application 2>&1 | tee secrets.txt
+                '''
+            }
+            post {
+                success {
+                    archiveArtifacts 'secrets.txt'
+                }
+            }
+        }
 
         stage('Scan code with dependency-check') {
             steps {
@@ -33,9 +36,26 @@ pipeline {
                     /opt/dependency-check/bin/dependency-check.sh --project "test" --scan "/opt/Vulnerable-Java-Application" | tee dependency-check.txt
                 '''
             }
+            post {
+                success {
+                    archiveArtifacts 'dependency-check.txt'
+                }
+            }
         }
 
-        // ... your other stages ...
+        stage('Static Application Security Testing') {
+            steps {
+                sh '''
+                    snyk code test /opt/Vulnerable-Java-Application | tee SAST_output.txt
+                '''
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
 
         stage('Archive Dependency-Check Report') {
             steps {
@@ -44,27 +64,11 @@ pipeline {
         }
     }
 
-        stage('Static Application Security Testing'){
-            steps{
-                sh '''
-                    snyk code test /opt/Vulnerable-Java-Application | tee SAST_output.txt
-                '''
-            }
-        }
-        stage('Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
-    }
-
-       post {
+    post {
         always {
             // Archive the git-secrets results as a build artifact
-                     archiveArtifacts 'secrets.txt'
-                     archiveArtifacts 'dependency-check.txt'
-                     archiveArtifacts 'SAST_output.txt'
-                                
+            archiveArtifacts 'secrets.txt'
+            archiveArtifacts 'SAST_output.txt'
         }
     }
 }

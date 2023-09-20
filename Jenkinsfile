@@ -39,7 +39,7 @@ pipeline {
                 '''
             }
         }
-        stage('Scan Code with git-secrets') {
+        stage('Scan Code with git-secrets new') {
     steps {
         sh '''
              git secrets --scan -r /opt &> new.txt

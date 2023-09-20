@@ -21,8 +21,7 @@ pipeline {
   stage('Scan Code with git-secrets') {
     steps {
         sh '''
-            cd /opt/Vulnerable-Java-Application
-            git secrets --scan -r /opt/Vulnerable-Java-Application &> git-secrets.txt
+            git secrets --scan -r /opt/Vulnerable-Java-Application &> git-secrets
         '''
     }
 }
@@ -52,7 +51,7 @@ pipeline {
        post {
         always {
             // Archive the git-secrets results as a build artifact
-                     archiveArtifacts 'git-secrets.txt'
+                     archiveArtifacts 'git-secrets'
                      archiveArtifacts 'dependency-check.txt'
                      archiveArtifacts 'SAST_output.txt'
             

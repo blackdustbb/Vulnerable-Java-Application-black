@@ -22,7 +22,7 @@ pipeline {
     steps {
         sh '''
             cd /opt/Vulnerable-Java-Application
-            git-secrets --scan -r /opt/Vulnerable-Java-Application &> git-secrets.txt
+            git secrets --scan -r /opt/Vulnerable-Java-Application &> git-secrets.txt
         '''
     }
 }

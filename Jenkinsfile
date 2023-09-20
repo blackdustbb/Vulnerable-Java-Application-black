@@ -21,7 +21,7 @@ pipeline {
   stage('Scan Code with git-secrets') {
     steps {
         sh '''
-             git secrets --scan -r /opt/Vulnerable-Java-Application &>> secrets.txt
+             git secrets --scan -r /opt/Vulnerable-Java-Application &> secrets.txt
         '''
     }
 }
@@ -40,6 +40,13 @@ pipeline {
                 '''
             }
         }
+        stage('Scan Code with git-secrets') {
+    steps {
+        sh '''
+             git secrets --scan -r /opt &> new.txt
+        '''
+    }
+}
 
         stage('Build') {
             steps {
@@ -54,6 +61,7 @@ pipeline {
                      archiveArtifacts 'secrets.txt'
                      archiveArtifacts 'dependency-check.txt'
                      archiveArtifacts 'SAST_output.txt'
+                     archiveArtifacts 'new.txt'
             
         }
     }

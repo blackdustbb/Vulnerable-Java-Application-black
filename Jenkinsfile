@@ -30,6 +30,13 @@ pipeline {
                     /opt/dependency-check/bin/dependency-check.sh --project "test" --scan "/opt/Vulnerable-Java-Application" | tee dependency-check.txt
                 '''
             }
+              // ... your other stages ...
+
+        stage('Archive Dependency-Check Report') {
+            steps {
+                archiveArtifacts artifacts: 'dependency-check-report.html', allowEmptyArchive: true
+            }
+        }
         }
 
         stage('Static Application Security Testing'){

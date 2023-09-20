@@ -34,6 +34,14 @@ pipeline {
             }
         }
 
+        stage('Static Application Security Testing'){
+            steps{
+                sh '''
+                    snyk code test /opt/Vulnerable-Java-Application | tee SAST_output.txt
+                '''
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'mvn clean package'
@@ -46,6 +54,7 @@ pipeline {
             // Archive the git-secrets results as a build artifact
                      archiveArtifacts 'git-secrets.txt'
                      archiveArtifacts 'dependency-check.txt'
+                     archiveArtifacts 'SAST_output.txt'
             
         }
     }

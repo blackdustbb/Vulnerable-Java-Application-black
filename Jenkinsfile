@@ -29,8 +29,7 @@ pipeline {
         stage('Scan code with dependency-check'){
             steps {
                 sh '''
-                    cd /opt/dependency-check/dependency-check/bin
-                    dependency-check.sh --project "test" --scan "/opt/Vulnerable-Java-Application" | tee dependency-check.txt
+                    /opt/dependency-check/dependency-check/bin/dependency-check.sh --project "test" --scan "/opt/Vulnerable-Java-Application" | tee dependency-check.txt
                 '''
             }
         }

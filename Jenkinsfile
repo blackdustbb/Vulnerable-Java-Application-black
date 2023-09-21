@@ -51,13 +51,22 @@ pipeline {
             }
         }
 
-        stage('Dynamic Application Security Testing') {
-            steps {
-                sh '''
-                    /opt/zaproxy/zap.sh -cmd -quickurl http://localhost:1337 -quickprogress -quickout output_ZAP.html
-                '''
-            }
+       stage('Dynamic Application Security Testing') {
+    steps {
+        script {
+            sh '''
+                /opt/zaproxy/zap.sh -cmd -quickurl http://localhost:1337 -quickprogress > /tmp/zap_output.html
+                mv /tmp/zap_output.html /opt/output_ZAP.html
+            '''
         }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'output_ZAP.html', allowEmptyArchive: true
+        }
+    }
+}
+
 
         stage('Build') {
             steps {
@@ -84,16 +93,7 @@ pipeline {
             archiveArtifacts 'secrets.txt'
             archiveArtifacts 'SAST_output.txt'
 
-            // Publish HTML report
-            publishHTML([
-                allowMissing: false,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'output_ZAP.html', // Change this to the correct directory
-                reportFiles: 'output_ZAP.html',    // Change this to the correct report file
-                reportName: 'ZAP Report',
-                reportTitles: 'ZAP Report'
-            ])
+         
         }
     }
 }

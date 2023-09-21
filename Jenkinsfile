@@ -51,6 +51,14 @@ pipeline {
             }
         }
 
+        stage('Dynamic Application Security Testing') {
+            steps {
+                sh '''
+                    zaproxy -daemon -quickurl http://localhost:2341 -quickout /root/.jenkins/workspace/DevSecOps\ 2/output_ZAP.html
+                '''
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'mvn clean package'
@@ -69,6 +77,7 @@ pipeline {
             // Archive the git-secrets results as a build artifact
             archiveArtifacts 'secrets.txt'
             archiveArtifacts 'SAST_output.txt'
+            archiveArtifacts 'output_ZAP.html'
         }
     }
 }

@@ -54,7 +54,7 @@ pipeline {
         stage('Dynamic Application Security Testing') {
             steps {
                 sh '''
-                    /opt/zaproxy/zap.sh -cmd -quickurl http://localhost:1337 -quickprogress -quickout /qwe/output_ZAP.html
+                    /opt/zaproxy/zap.sh -cmd -quickurl http://localhost:1337 -quickprogress -quickout -report /opt/output_ZAP.html
                 '''
             }
         }
@@ -89,7 +89,7 @@ pipeline {
                 allowMissing: false,
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
-                reportDir: '/qwe/', // Change this to the correct directory
+                reportDir: '/opt/', // Change this to the correct directory
                 reportFiles: 'output_ZAP.html',    // Change this to the correct report file
                 reportName: 'ZAP Report',
                 reportTitles: 'ZAP Report'

@@ -51,14 +51,14 @@ pipeline {
             }
         }
 
-       stage('Dynamic Application Security Testing') {
+ stage('Dynamic Application Security Testing') {
     steps {
         script {
             def zapOutput = sh(
                 script: '/opt/zaproxy/zap.sh -cmd -quickurl http://localhost:1337 -quickprogress',
                 returnStatus: true,
                 returnStdout: true
-            )
+            ).toString()
             writeFile(file: '/opt/output_ZAP.html', text: zapOutput)
         }
     }

@@ -54,7 +54,7 @@ pipeline {
         stage('Dynamic Application Security Testing') {
             steps {
                 sh '''
-                    zaproxy -daemon -quickurl http://localhost:2341 -quickout /root/.jenkins/workspace/DevSecOps\ 2/output_ZAP.html
+                    zaproxy -daemon -quickurl http://localhost:2341 -quickout /root/.jenkins/workspace/DevSecOps2/output_ZAP.html
                 '''
             }
         }

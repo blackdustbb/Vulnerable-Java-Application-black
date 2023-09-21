@@ -51,23 +51,25 @@ pipeline {
             }
         }
 
- stage('Dynamic Application Security Testing') {
+stage('Dynamic Application Security Testing') {
     steps {
         script {
-            def zapOutput = sh(
-                script: '/opt/zaproxy/zap.sh -cmd -quickurl http://localhost:1337 -quickprogress',
-                returnStatus: true,
-                returnStdout: true
-            ).toString()
-            writeFile(file: '/opt/output_ZAP.html', text: zapOutput)
-        }
-    }
-    post {
-        always {
-            archiveArtifacts artifacts: 'output_ZAP.html', allowEmptyArchive: true
+            // Define a variable to store the ZAP report file path
+            def zapReportFile = "/opt/output_ZAP.html"
+
+            // Run ZAP with the necessary options to generate an HTML report
+            sh "/opt/zaproxy/zap.sh -quickurl http://localhost:1337 -quickprogress -addoninstall report -addonupdate report -addoninstall exportreport -addonupdate exportreport -exportreport.saveOpenAPI true -exportreport.outputFile ${zapReportFile} -exportreport.fileExtension html"
+
+            // Check if the ZAP report file exists before archiving it
+            if (fileExists(zapReportFile)) {
+                archiveArtifacts artifacts: zapReportFile, allowEmptyArchive: true
+            } else {
+                error("ZAP HTML report not found at ${zapReportFile}")
+            }
         }
     }
 }
+
 
 
 

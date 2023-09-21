@@ -54,21 +54,23 @@ pipeline {
 stage('Dynamic Application Security Testing') {
     steps {
         script {
-            // Define a variable to store the ZAP report file path
-            def zapReportFile = "/opt/output_ZAP.html"
+            // Define the target URL and report file path
+            def targetUrl = "http://localhost:1337" // Replace with your actual URL
+            def reportFile = "/opt/output_ZAP.html"
 
-            // Run ZAP with the necessary options to generate an HTML report
-            sh "/opt/zaproxy/zap.sh -quickurl http://localhost:1337 -quickprogress -addoninstall report -addonupdate report -addoninstall exportreport -addonupdate exportreport -exportreport.saveOpenAPI true -exportreport.outputFile ${zapReportFile} -exportreport.fileExtension html"
+            // Run ZAP and generate an HTML report
+            sh "/opt/zaproxy/zap.sh -quickurl ${targetUrl} -quickprogress -exportreport ${reportFile} -exportreport.format html"
 
             // Check if the ZAP report file exists before archiving it
-            if (fileExists(zapReportFile)) {
-                archiveArtifacts artifacts: zapReportFile, allowEmptyArchive: true
+            if (fileExists(reportFile)) {
+                archiveArtifacts artifacts: reportFile, allowEmptyArchive: true
             } else {
-                error("ZAP HTML report not found at ${zapReportFile}")
+                error("ZAP HTML report not found at ${reportFile}")
             }
         }
     }
 }
+
 
 
 

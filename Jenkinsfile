@@ -51,29 +51,13 @@ pipeline {
             }
         }
 
-stage('Dynamic Application Security Testing') {
-    steps {
-        script {
-            // Define the target URL and report file path
-            def targetUrl = "http://localhost:1337" // Replace with your actual URL
-            def reportFile = "/opt/output_ZAP.html"
-
-            // Run ZAP and generate an HTML report
-            sh "/opt/zaproxy/zap.sh -quickurl ${targetUrl} -quickprogress -exportreport ${reportFile} -exportreport.format html"
-
-            // Check if the ZAP report file exists before archiving it
-            if (fileExists(reportFile)) {
-                archiveArtifacts artifacts: reportFile, allowEmptyArchive: true
-            } else {
-                error("ZAP HTML report not found at ${reportFile}")
+        stage('Dynamic Application Security Testing') {
+            steps {
+                sh '''
+                    /opt/zaproxy/zap.sh -cmd -quickurl http://localhost:1337 -quickprogress -quickout /opt/output_ZAP.html
+                '''
             }
         }
-    }
-}
-
-
-
-
 
         stage('Build') {
             steps {
@@ -100,7 +84,16 @@ stage('Dynamic Application Security Testing') {
             archiveArtifacts 'secrets.txt'
             archiveArtifacts 'SAST_output.txt'
 
-         
+            // Publish HTML report
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: '/opt', // Change this to the correct directory
+                reportFiles: 'output_ZAP.html',    // Change this to the correct report file
+                reportName: 'ZAP Report',
+                reportTitles: 'ZAP Report'
+            ])
         }
     }
 }

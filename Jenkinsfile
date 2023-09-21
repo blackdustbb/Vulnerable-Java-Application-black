@@ -89,7 +89,7 @@ pipeline {
                 allowMissing: false,
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
-                reportDir: '/opt/', // Change this to the correct directory
+                reportDir: '/opt/output_ZAP.html', // Change this to the correct directory
                 reportFiles: 'output_ZAP.html',    // Change this to the correct report file
                 reportName: 'ZAP Report',
                 reportTitles: 'ZAP Report'

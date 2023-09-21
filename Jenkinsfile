@@ -54,10 +54,12 @@ pipeline {
        stage('Dynamic Application Security Testing') {
     steps {
         script {
-            sh '''
-                /opt/zaproxy/zap.sh -cmd -quickurl http://localhost:1337 -quickprogress > /tmp/zap_output.html
-                mv /tmp/zap_output.html /opt/output_ZAP.html
-            '''
+            def zapOutput = sh(
+                script: '/opt/zaproxy/zap.sh -cmd -quickurl http://localhost:1337 -quickprogress',
+                returnStatus: true,
+                returnStdout: true
+            )
+            writeFile(file: '/opt/output_ZAP.html', text: zapOutput)
         }
     }
     post {
@@ -66,6 +68,7 @@ pipeline {
         }
     }
 }
+
 
 
         stage('Build') {

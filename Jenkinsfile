@@ -70,6 +70,12 @@ pipeline {
                 archiveArtifacts artifacts: 'dependency-check-report.html', allowEmptyArchive: true
             }
         }
+
+        stage('Archive ZAP Report') {
+            steps {
+                archiveArtifacts artifacts: 'output_ZAP.html', allowEmptyArchive: true
+            }
+        }
     }
 
     post {
@@ -77,7 +83,6 @@ pipeline {
             // Archive the git-secrets results as a build artifact
             archiveArtifacts 'secrets.txt'
             archiveArtifacts 'SAST_output.txt'
-            archiveArtifacts 'output_ZAP.html'
         }
     }
 }

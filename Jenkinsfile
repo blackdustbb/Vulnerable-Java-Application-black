@@ -64,7 +64,7 @@ stage('Debug: List Workspace Contents') {
             }
             post {
                 success {
-                    archiveArtifacts '/opt/test/Report_new_ZAP.html'
+                    archiveArtifacts 'Report_new_ZAP.html'
                 }
             }
         }

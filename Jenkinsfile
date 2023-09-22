@@ -50,7 +50,11 @@ pipeline {
                 '''
             }
         }
-
+stage('Debug: List Workspace Contents') {
+    steps {
+        sh 'ls -R'
+    }
+}
         stage('Dynamic Application Security Testing') {
             steps {
                 sh '''

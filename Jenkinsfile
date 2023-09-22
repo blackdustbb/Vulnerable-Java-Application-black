@@ -62,6 +62,14 @@ stage('Debug: List Workspace Contents') {
 
                 '''
             }
+            stage('Debug: List Workspace Contents') {
+    steps {
+        sh 'ls -R'
+    }
+                stage('Debug: List Workspace Contents') {
+    steps {
+        sh 'pwd'
+    }
             post {
                 success {
                     archiveArtifacts '**/Report_new_ZAP.html'

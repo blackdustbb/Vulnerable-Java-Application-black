@@ -54,7 +54,7 @@ pipeline {
         stage('Dynamic Application Security Testing') {
             steps {
                 sh '''
-                  /opt/zaproxy/zap.sh -cmd -quickurl http://localhost:1337 -quickprogress -quickout /opt/output_ZAP.html
+                  zaproxy -cmd -quickurl http://localhost:1337 -quickprogress -quickout /opt/Report_new_ZAP.html
 
                 '''
             }
@@ -74,7 +74,7 @@ pipeline {
 
         stage('Archive ZAP Report') {
             steps {
-                archiveArtifacts artifacts: 'output_ZAP.html', allowEmptyArchive: true
+                archiveArtifacts artifacts: 'Report_new_ZAP.html', allowEmptyArchive: true
             }
         }
     }
@@ -91,7 +91,7 @@ pipeline {
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
                 reportDir: '/opt', // Change this to the correct directory
-                reportFiles: 'output_ZAP.html',    // Change this to the correct report file
+                reportFiles: 'Report_new_ZAP.html',    // Change this to the correct report file
                 reportName: 'ZAP Report',
                 reportTitles: 'ZAP Report'
             ])

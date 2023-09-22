@@ -60,7 +60,7 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts 'Report_new_ZAP.html'
+                    archiveArtifacts '**/Report_new_ZAP.html'
                 }
             }
         }

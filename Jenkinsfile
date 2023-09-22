@@ -95,7 +95,7 @@ stage('Debug: List Workspace Contents') {
             archiveArtifacts 'secrets.txt'
             archiveArtifacts 'SAST_output.txt'
 
-             Publish HTML report
+            // Publish HTML report
              publishHTML([
              allowMissing: false,
              alwaysLinkToLastBuild: true,

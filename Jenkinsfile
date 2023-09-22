@@ -58,13 +58,13 @@ stage('Debug: List Workspace Contents') {
         stage('Dynamic Application Security Testing') {
             steps {
                 sh '''
-                  zaproxy -cmd -quickurl http://localhost:1337 -quickprogress -quickout Report_new_ZAP.html
+                  zaproxy -cmd -quickurl http://localhost:1337 -quickprogress -quickout /root/.jenkins/workspace/DevSecOps2/Report_new_ZAP.html
 
                 '''
             }
             post {
                 success {
-                    archiveArtifacts '**/Report_new_ZAP.html'
+                    archiveArtifacts '/root/.jenkins/workspace/DevSecOps2/Report_new_ZAP.html'
                 }
             }
         }

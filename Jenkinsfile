@@ -52,7 +52,7 @@ pipeline {
         }
 stage('Debug: List Workspace Contents') {
     steps {
-        sh 'ls -R'
+        sh 'pwd'
     }
 }
         stage('Dynamic Application Security Testing') {
@@ -62,14 +62,6 @@ stage('Debug: List Workspace Contents') {
 
                 '''
             }
-            stage('Debug: List Workspace Contents') {
-    steps {
-        sh 'ls -R'
-    }
-                stage('Debug: pwd') {
-    steps {
-        sh 'pwd'
-    }
             post {
                 success {
                     archiveArtifacts '**/Report_new_ZAP.html'

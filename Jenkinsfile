@@ -58,7 +58,13 @@ pipeline {
 
                 '''
             }
+            post {
+                success {
+                    archiveArtifacts 'Report_new_ZAP.html'
+                }
+            }
         }
+        
 
         stage('Build') {
             steps {
@@ -86,15 +92,15 @@ pipeline {
             archiveArtifacts 'SAST_output.txt'
 
             // Publish HTML report
-            publishHTML([
-                allowMissing: false,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: '/opt', // Change this to the correct directory
-                reportFiles: 'Report_new_ZAP.html',    // Change this to the correct report file
-                reportName: 'ZAP Report',
-                reportTitles: 'ZAP Report'
-            ])
+            //publishHTML([
+                //allowMissing: false,
+                //alwaysLinkToLastBuild: true,
+                //keepAll: true,
+                //reportDir: '/opt', // Change this to the correct directory
+                //reportFiles: 'Report_new_ZAP.html',    // Change this to the correct report file
+                //reportName: 'ZAP Report',
+                //reportTitles: 'ZAP Report'
+            //])
         }
     }
 }

@@ -78,12 +78,12 @@ pipeline {
             }
         }
 
-    //    stage('Archive ZAP Report') {
-    //        steps {
-      //          archiveArtifacts artifacts: 'Report_new_ZAP.html', allowEmptyArchive: true
-       //     }
-  //      }
-  //  }
+       stage('Archive ZAP Report') {
+           steps {
+          archiveArtifacts artifacts: 'Report_new_ZAP.html', allowEmptyArchive: true
+            }
+    }
+   }
 
     post {
         always {

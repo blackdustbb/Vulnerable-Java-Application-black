@@ -101,6 +101,6 @@ pipeline {
                 //reportName: 'ZAP Report',
                 //reportTitles: 'ZAP Report'
             //])
-       // }
+        }
     }
 }

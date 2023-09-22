@@ -84,7 +84,7 @@ stage('Debug: List Workspace Contents') {
 
        stage('Archive ZAP Report') {
            steps {
-          archiveArtifacts artifacts: '/root/.jenkins/workspace/DevSecOps2/Report_new_ZAP.html', allowEmptyArchive: true
+          archiveArtifacts artifacts: 'Report_new_ZAP.html', allowEmptyArchive: true
             }
     }
    }

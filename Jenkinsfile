@@ -66,7 +66,7 @@ stage('Debug: List Workspace Contents') {
     steps {
         sh 'ls -R'
     }
-                stage('Debug: List Workspace Contents') {
+                stage('Debug: pwd') {
     steps {
         sh 'pwd'
     }

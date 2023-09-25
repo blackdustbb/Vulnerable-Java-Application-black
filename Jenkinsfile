@@ -95,6 +95,7 @@ stage('Debug: List Workspace Contents') {
                         -F 'test=1' \
                         -F 'type=application/json' \
                         -F 'scan_type=Dependency Check Scan' \
+                        -F 'File=dependency-check-report.html' \
                         -F 'tags=test'
                     """
                     sh curlCommand

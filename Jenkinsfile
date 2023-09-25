@@ -94,7 +94,7 @@ stage('Debug: List Workspace Contents') {
                         -H 'Content-Type: multipart/form-data' \
                         -F 'test=1' \
                         -F 'type=application/json' \
-                        -F 'scan_type=dependency-check Report' \
+                        -F 'scan_type=Dependency Check Report' \
                         -F 'tags=test'
                     """
                     sh curlCommand

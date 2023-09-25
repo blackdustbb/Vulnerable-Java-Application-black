@@ -83,6 +83,11 @@ stage('Debug: List Workspace Contents') {
        //   archiveArtifacts artifacts: 'Scan_Report_ZAP.html', allowEmptyArchive: true
      //       }
    // }
+stage('Debug: List Workspace Contents') {
+    steps {
+        sh 'ls -l /path/to/your/workspace'
+    }
+}
 
         stage('Generate and Upload Dependency-Check Report to DefectDojo') {
             steps {

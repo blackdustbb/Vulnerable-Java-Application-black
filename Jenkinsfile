@@ -62,6 +62,11 @@ stage('Debug: List Workspace Contents') {
 
                 '''
             }
+             post {
+                success {
+                    archiveArtifacts 'Scan_Report_ZAP.html'
+                }
+            }
         }
               
 

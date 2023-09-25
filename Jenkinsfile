@@ -48,7 +48,7 @@ pipeline {
                         -F 'test=1' \
                         -F 'type=application/json' \
                         -F 'scan_type=Dependency Check Scan' \
-                        -F 'File=@~/.jenkins/workspace/DevSecOps2/dependency-check-report.html' \
+                        -F 'File=@/.jenkins/workspace/DevSecOps2/dependency-check-report.html' \
                         -F 'tags=test'
                     '''
                 }

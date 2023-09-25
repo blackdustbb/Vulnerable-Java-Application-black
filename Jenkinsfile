@@ -35,6 +35,20 @@ pipeline {
                 sh '''
                     /opt/dependency-check/bin/dependency-check.sh --project "test" --scan "/opt/Vulnerable-Java-Application" | tee dependency-check.txt
                 '''
+                      script {
+                    def curlCommand = """
+                        curl -X 'POST' 'http://localhost:8081/api/v2/reimport-scan/' \
+                        -H 'accept: application/json' \
+                        -H 'Authorization: Token 3acbcf28101e0c357196bd9e861df0c7ae0dc46e' \
+                        -H 'Content-Type: multipart/form-data' \
+                        -F 'test=1' \
+                        -F 'type=application/json' \
+                        -F 'scan_type=Dependency Check Scan' \
+                        -F 'File=dependency-check-report.html' \
+                        -F 'tags=test'
+                    """
+                    sh curlCommand
+            }
             }
             post {
                 success {
@@ -75,20 +89,7 @@ stage('Debug: List Workspace Contents') {
         stage('Archive Dependency-Check Report') {
             steps {
                 archiveArtifacts artifacts: 'dependency-check-report.html', allowEmptyArchive: true
-                 script {
-                    def curlCommand = """
-                        curl -X 'POST' 'http://localhost:8081/api/v2/reimport-scan/' \
-                        -H 'accept: application/json' \
-                        -H 'Authorization: Token 3acbcf28101e0c357196bd9e861df0c7ae0dc46e' \
-                        -H 'Content-Type: multipart/form-data' \
-                        -F 'test=1' \
-                        -F 'type=application/json' \
-                        -F 'scan_type=Dependency Check Scan' \
-                        -F 'File=dependency-check-report.html' \
-                        -F 'tags=test'
-                    """
-                    sh curlCommand
-            }
+           
         }
 
     //   stage('Archive ZAP Report') {

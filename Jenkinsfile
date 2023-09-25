@@ -61,14 +61,7 @@ stage('Debug: List Workspace Contents') {
                   zaproxy -cmd -quickurl http://localhost:1337 -quickprogress -quickout /opt/Scan_Report_ZAP.html
 
                 '''
-            }
-            post {
-                success {
-                    archiveArtifacts 'Scan_Report_ZAP.html'
-                }
-            }
-        }
-        
+              
 
         stage('Build') {
             steps {

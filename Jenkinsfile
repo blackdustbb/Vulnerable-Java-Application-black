@@ -83,6 +83,24 @@ stage('Debug: List Workspace Contents') {
        //   archiveArtifacts artifacts: 'Scan_Report_ZAP.html', allowEmptyArchive: true
      //       }
    // }
+
+        stage('Generate and Upload Dependency-Check Report to DefectDojo') {
+            steps {
+                script {
+                    def curlCommand = """
+                        curl -X 'POST' 'http://localhost:8081/api/v2/reimport-scan/' \
+                        -H 'accept: application/json' \
+                        -H 'Authorization: Token 3acbcf28101e0c357196bd9e861df0c7ae0dc46e' \
+                        -H 'Content-Type: multipart/form-data' \
+                        -F 'test=1' \
+                        -F 'type=application/json' \
+                        -F 'scan_type=dependency-check Report' \
+                        -F 'tags=test'
+                    """
+                    sh curlCommand
+                }
+            }
+        }
    }
 
     post {

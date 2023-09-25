@@ -58,7 +58,7 @@ stage('Debug: List Workspace Contents') {
         stage('Dynamic Application Security Testing') {
             steps {
                 sh '''
-                  zaproxy -cmd -quickurl http://localhost:1337 -quickprogress -quickout /opt/Scan_Report_ZAP.html
+                  zaproxy -cmd -quickurl http://localhost:1337 -quickprogress -quickout Scan_Report_ZAP.html
 
                 '''
             }
@@ -78,11 +78,11 @@ stage('Debug: List Workspace Contents') {
             }
         }
 
-       stage('Archive ZAP Report') {
-           steps {
-          archiveArtifacts artifacts: 'Scan_Report_ZAP.html', allowEmptyArchive: true
-            }
-    }
+    //   stage('Archive ZAP Report') {
+         //  steps {
+       //   archiveArtifacts artifacts: 'Scan_Report_ZAP.html', allowEmptyArchive: true
+     //       }
+   // }
    }
 
     post {

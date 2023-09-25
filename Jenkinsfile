@@ -83,9 +83,9 @@ stage('Debug: List Workspace Contents') {
        //   archiveArtifacts artifacts: 'Scan_Report_ZAP.html', allowEmptyArchive: true
      //       }
    // }
-stage('Debug: List Workspace Contents') {
+stage('Debug: Ldist Workspace Contents') {
     steps {
-        sh 'ls -l /path/to/your/workspace'
+        sh 'pwd'
     }
 }
 

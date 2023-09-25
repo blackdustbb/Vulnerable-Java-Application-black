@@ -34,7 +34,7 @@ pipeline {
             steps {
                 sh '''
                     /opt/dependency-check/bin/dependency-check.sh --project "test" --scan "/opt/Vulnerable-Java-Application" | tee dependency-check.txt
-                    curl -X 'POST' 'http://localhost:8081/api/v2/reimport-scan/' H 'accept: application/json' -H 'Authorization: Token 3acbcf28101e0c357196bd9e861df0c7ae0dc46e' -H 'Content-Type: multipart/form-data'  -F 'test=1' -F 'type=application/json' -F 'scan_type=Dependency Check Scan' -F 'File=dependency-check-report.html' -F 'tags=test'
+                    curl -X 'POST' 'http://localhost:8081/api/v2/reimport-scan/' -H 'accept: application/json' -H 'Authorization: Token 3acbcf28101e0c357196bd9e861df0c7ae0dc46e' -H 'Content-Type: multipart/form-data'  -F 'test=1' -F 'type=application/json' -F 'scan_type=Dependency Check Scan' -F 'File=dependency-check-report.html' -F 'tags=test'
                 '''
             }
             post {

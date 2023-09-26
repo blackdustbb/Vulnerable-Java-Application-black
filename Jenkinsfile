@@ -101,6 +101,19 @@ stage('Debug: List Workspace Contents') {
             reportName: 'ZAP Report',
            reportTitles: 'ZAP Report'
          ])
+             // Send email notifications
+        emailext(
+            subject: "Build ${currentBuild.result}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+            body: """
+            <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+            <p>Git Secrets Report: <a href="${env.BUILD_URL}/artifact/secrets.txt">secrets.txt</a></p>
+            <p>SAST Output: <a href="${env.BUILD_URL}/artifact/SAST_output.txt">SAST_output.txt</a></p>
+            <p>ZAP Report: <a href="${env.BUILD_URL}/artifact/output_ZAP.html">output_ZAP.html</a></p>
+            """,
+            to: "bluedustbb@gmail.com", // Add the recipient email address here
+            attachLog: true, // Attach build log
+            compressLog: true // Compress build log
+        )
         }
     }
 }
